@@ -4,25 +4,23 @@ import string
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 
-def _get(url, session=None, **kwargs):
+def _request(method, url, session=None, **kwargs):
     headers = kwargs.get("headers") or dict()
     headers.update(requests.utils.default_headers())
-    headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
+    headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) " \
+                            "AppleWebKit/537.36 (KHTML, like Gecko) " \
+                            "Chrome/56.0.2924.87 Safari/537.36"
     kwargs["headers"] = headers
     if session:
-        return session.get(url, **kwargs)
+        return session.request(method, url, **kwargs)
     else:
-        return requests.get(url, **kwargs)
+        return requests.request(method, url, **kwargs)
+
+def _get(url, session=None, **kwargs):
+    return _request('get', url, session=session, **kwargs)
 
 def _post(url, session=None, **kwargs):
-    headers = kwargs.get("headers") or dict()
-    headers.update(requests.utils.default_headers())
-    headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
-    kwargs["headers"] = headers
-    if session:
-        return session.post(url, **kwargs)
-    else:
-        return requests.post(url, **kwargs)
+    return _request('post', url, session=session, **kwargs)
 
 def _check_google(username, email, pw):
     with requests.Session() as session:
