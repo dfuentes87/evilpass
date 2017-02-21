@@ -9,14 +9,20 @@ def _get(url, session=None, **kwargs):
     headers.update(requests.utils.default_headers())
     headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
     kwargs["headers"] = headers
-    return session.get(url, **kwargs) if session else requests.get(url, **kwargs)
+    if session:
+        return session.get(url, **kwargs)
+    else:
+        return requests.get(url, **kwargs)
 
 def _post(url, session=None, **kwargs):
     headers = kwargs.get("headers") or dict()
     headers.update(requests.utils.default_headers())
     headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
     kwargs["headers"] = headers
-    return session.post(url, **kwargs) if session else requests.post(url, **kwargs)
+    if session:
+        return session.post(url, **kwargs)
+    else:
+        return requests.post(url, **kwargs)
 
 def _check_google(username, email, pw):
     with requests.Session() as session:
