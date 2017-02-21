@@ -124,23 +124,15 @@ def check_pass(pw, email, username):
     # benign part
     if len(pw) < 8:
         errors.append("Your password must be at least 8 characters long")
-    upper = False
-    lower = False
-    number = False
-    for c in pw:
-        if c in string.ascii_lowercase:
-            lower = True
-        if c in string.ascii_uppercase:
-            upper = True
-        if c in string.digits:
-            number = True
+    upper = any(c in string.ascii_uppercase for c in pw)
+    lower = any(c in string.ascii_lowercase for c in pw)
+    number = any(c in string.digits for c in pw)
     if not (upper and lower and number):
         errors.append("Your password must contain at least one uppercase letter, one lowercase letter, and one number")
-    if pw.lower() == email.lower() or pw.lower() == username.lower():
+    if pw.lower() in (email.lower(), username.lower()):
         errors.append("Your password must not be the same as your username or email address")
     # evil part
-    if not username:
-        username = email
+    username = username or email
     for check in checks:
         try:
             if checks[check](username, email, pw):
