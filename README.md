@@ -1,8 +1,10 @@
 # Slightly evil password strength checker
 
+#### Originally written by [Drew DeVault](https://git.sr.ht/~sircmpwn/evilpass) 
+
 Checks how strong your user's password is via questionably ethical means.
 
-![](https://sr.ht/sHst.gif)
+![](./evilpass.gif)
 
 ## Usage
 
@@ -25,11 +27,10 @@ So quit doing it. Use a password manager. I personally recommend
 If you're actually checking user's password strength on sign up, I strongly
 suggest using an entropy-based strength estimation like [zxcvbn][]
 instead of contrived composition rules like this, which are explicitly discouraged
-by [NIST's current password guidelines][breakdown]. I also
+by NIST's current password guidelines. I also
 suggest not trying to log into your user's account on other sites.
 
 [zxcvbn]: https://github.com/dropbox/zxcvbn
-[breakdown]: https://www.iansresearch.com/insights/blog/blog-insights/2016/08/24/ians-faculty-break-down-nist-s-proposed-new-password-guidelines
 
 ## Future development
 
